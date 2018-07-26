@@ -1,0 +1,11 @@
+{
+	"files": {
+		"README.md": "3cc83b1718248ce982147e7fa3c25d09296678db890b78f39d84865b971d1be2",
+		"index.js": "8de1e7f7f3d82b9b3a2e784f189844d028676cab672c94eb3bcc9174177cb25b"
+	},
+	"defs": {
+		"C_START_SKILL": 6,
+		"S_EACH_SKILL_RESULT": 7,
+		"S_LOGIN": 9
+	}
+}
