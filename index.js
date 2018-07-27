@@ -1,7 +1,7 @@
 const Command = require('command');
 const GRIM_STRIKE = 5; // 50300 & 50330
 const GRIM_TIMEOUT = 1400; // ms // in case you miss your target and there's no S_EACH_SKILL_RESULT, but you wanna recast it real fast lol
-const SHEER = 3; // sheer can cancel grim before it has done 2nd hit
+const SHEER = 3; // 30300 // sheer can cancel grim before it has done 2nd hit
 
 module.exports = function NoWastedGrimStrikes(dispatch) {
 	const command = Command(dispatch);
