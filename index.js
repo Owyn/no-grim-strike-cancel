@@ -85,7 +85,7 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
 							if(queue)
 							{
 								let skill = Math.floor(queue.skill.id / 10000);
-								dispatch.toServer('C_START_SKILL', 6, queue);
+								//dispatch.toServer('C_START_SKILL', 6, queue);
 								if(skill == GRIM_STRIKE)
 								{
 									skill = CAT_GRIM;
