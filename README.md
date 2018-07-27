@@ -1,5 +1,5 @@
 # no_more_wasted_grim-strikes
-Stops early canceling of **grim strike** <img src=http://u.cubeupload.com/Owyn/GrimStrike1.png> from other grim strikes.
+Stops early canceling of **grim strike** <img src=http://u.cubeupload.com/Owyn/GrimStrike1.png> from other grim strikes or sheer.
 
 Makes it impossible to cast grim strike again or **sheer** before the 2nd hit of grimstrike (with biggest dmg) has passed, or till 1.4sec elapsed in case you fully missed your enemy or was just hitting air for some reason (don't do that), doesn't stop sundering from early cancelling grimstrike though
 
