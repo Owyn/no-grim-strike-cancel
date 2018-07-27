@@ -1,6 +1,7 @@
 const Command = require('command');
 const GRIM_STRIKE = 5; // 50300 & 50330
 const GRIM_TIMEOUT = 1400; // ms // in case you miss your target and there's no S_EACH_SKILL_RESULT, but you wanna recast it real fast lol
+const SHEER = 3; // sheer can cancel grim before it has done 2nd hit
 
 module.exports = function NoWastedGrimStrikes(dispatch) {
 	const command = Command(dispatch);
@@ -13,8 +14,9 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
         gameId = event.gameId;
 		if (event.templateId % 100 - 1 === 8 && !hooks.length)
 		{
-			hook('C_START_SKILL', 6, event => {
-				if (locked && Math.floor(event.skill.id / 10000) === GRIM_STRIKE && Date.now() - prevgrim < GRIM_TIMEOUT)
+			hook('C_START_SKILL', 6, {order: 200, filter: {fake: null}}, event => {
+				let skill = Math.floor(event.skill.id / 10000)
+				if (locked && (skill === GRIM_STRIKE || skill === SHEER) && Date.now() - prevgrim < GRIM_TIMEOUT)
 				{
 					return false;
 				}
