@@ -1,7 +1,7 @@
 # no_more_wasted_grim-strikes
 Stops early canceling of grim strike from other grim strikes.
 
-Makes it impossible to cast grim strike again before the 2nd hit (with biggest dmg) of previous one is made
+Makes it impossible to cast grim strike again or **sheer** before the 2nd hit of grimstrike (with biggest dmg) has passed, or till 1.4sec elapsed incase you fully missed your enemy or was just hitting air for somer reason (don't do that), doesn't stop sundering from early cancelling grimstrike though
 
 **warning** - it might not work fully if you use **Skill Prediction**, it's not like there's a way for both these modules to work together fine...
 
