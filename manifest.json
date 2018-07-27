@@ -7,9 +7,6 @@
 	"defs": {
 		"C_START_SKILL": 6,
 		"S_EACH_SKILL_RESULT": 7,
-		"S_LOGIN": [
-			9,
-			10
-		]
+		"S_LOGIN": 10
 	}
 }
