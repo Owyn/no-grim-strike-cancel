@@ -9,7 +9,7 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
     locked = false,
 	prevgrim = 0;
     
-    dispatch.hook('S_LOGIN', 9, event => {
+    dispatch.hook('S_LOGIN', 10, event => {
         gameId = event.gameId;
 		if (event.templateId % 100 - 1 === 8 && !hooks.length)
 		{

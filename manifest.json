@@ -1,12 +1,15 @@
 {
 	"files": {
 		"README.md": "a2f3f5d5a8216b85f94f6f7926c02467415000bb7a015721f54653bc6b38e5df",
-		"index.js": "8de1e7f7f3d82b9b3a2e784f189844d028676cab672c94eb3bcc9174177cb25b",
+		"index.js": "fae87e379e0424bdef73ef858235f1e2df74112293f65a142ce320e69c802aeb",
 		"module.json": "c9d64db002e29acb5860c9bed579321586008c8646529c2079594fe9a2428443"
 	},
 	"defs": {
 		"C_START_SKILL": 6,
 		"S_EACH_SKILL_RESULT": 7,
-		"S_LOGIN": 9
+		"S_LOGIN": [
+			9,
+			10
+		]
 	}
 }
