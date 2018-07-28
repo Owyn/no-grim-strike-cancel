@@ -1,12 +1,14 @@
 {
 	"files": {
-		"README.md": "b829c8c778fceeac7dc2a5eb9ee695fd7989d3bd3d76d462d89883f181419dbc",
-		"index.js": "fb795d2aead4f9ce470a791ba713ab53c63a4763555263d611fdf9822b8735ec",
+		"README.md": "ec5495d85d232ce8afe8dc0f7536d47f78ac4b94b45505ab36b21c35c7f63686",
+		"index.js": "39a0349315b870791a52d838b80b344205dbe4c3c94996cc6947641ecb133744",
 		"module.json": "c9d64db002e29acb5860c9bed579321586008c8646529c2079594fe9a2428443"
 	},
 	"defs": {
 		"C_START_SKILL": 6,
+		"S_CREST_MESSAGE": 2,
 		"S_EACH_SKILL_RESULT": 7,
-		"S_LOGIN": 10
+		"S_LOGIN": 10,
+		"S_SKILL_CATEGORY": 3
 	}
 }

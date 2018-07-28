@@ -1,6 +1,6 @@
 //const Command = require('command');
 const GRIM_STRIKE = 5; // 50300 & 50330
-const GRIM_TIMEOUT = 1400; // ms // in case you miss your target and there's no S_EACH_SKILL_RESULT, but you wanna recast it real fast lol
+const GRIM_TIMEOUT = 700; // ms // in case you miss your target and there's no S_EACH_SKILL_RESULT, but you wanna recast it real fast lol
 const SHEER = 3; // 30300 // sheer can cancel grim before it has done 2nd hit
 const CAT_GRIM = 90005;
 const CAT_SHEER =90003;
@@ -11,7 +11,9 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
 	queue = 0;
 	gameId = 0,
     locked = false,
-	prevgrim = 0;
+	prevgrim = 0,
+	canrecastgirm = false;
+	haspretty = dispatch.base.protocolMap.name.has('S_SKILL_CATEGORY');
 	
 	function handleredcleanup(skill)
 	{
@@ -24,9 +26,9 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
 		{
 			qskill = CAT_SHEER;
 		}
-		if(qskill != skill)
+		if(qskill != skill && haspretty)
 		{
-			//dispatch.toClient('S_SKILL_CATEGORY', 3, {category: qskill, enabled: true});
+			dispatch.toClient('S_SKILL_CATEGORY', 3, {category: qskill, enabled: true});
 		}
 	}
 	
@@ -34,7 +36,25 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
         gameId = ev.gameId;
 		if (ev.templateId % 100 - 1 === 8 && !hooks.length)
 		{
-			hook('C_START_SKILL', 6, {order: -20, filter: {fake: null}}, event => {
+			/*dispatch.hook('S_ACTION_STAGE', 6, {order: 100, filter: {fake: null}}, event => {
+				if(event.gameId === gameId && event.stage == 0 && Math.floor(event.skill.id / 10000) === GRIM_STRIKE)
+				{
+					command.message('<font color="#00FFFF">SAS Locked1 </font>' + " prev: " + String(Date.now() - prevgrim));
+					locked = true;
+					prevgrim = Date.now();
+				}
+				//console.log(event);
+			});*/
+			
+			dispatch.hook('S_CREST_MESSAGE', 2, event => {
+				if (event.type === 6) 
+				{
+					//command.message('reset <font color="#A52A2A">'+ event.skill +' </font>');
+					canrecastgirm = true;
+				}
+			});
+
+			hook('C_START_SKILL', 6, {order: -200}, event => {
 				let skill = Math.floor(event.skill.id / 10000);
 				if (locked && (skill === GRIM_STRIKE || skill === SHEER) && Date.now() - prevgrim < GRIM_TIMEOUT)
 				{
@@ -52,7 +72,7 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
 					{
 						skill = CAT_SHEER;
 					}
-					//dispatch.toClient('S_SKILL_CATEGORY', 3, {category: skill, enabled: false});
+					if(haspretty){dispatch.toClient('S_SKILL_CATEGORY', 3, {category: skill, enabled: false});}
 					return false;
 				}
 				else if(queue)
@@ -65,6 +85,7 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
 				{
 					//command.message('<font color="#00FFFF">SS Locked1 </font>' + " prev: " + String(Date.now() - prevgrim));
 					locked = true;
+					canrecastgirm = false;
 					prevgrim = Date.now();
 				}
 			});
@@ -85,16 +106,28 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
 							if(queue)
 							{
 								let skill = Math.floor(queue.skill.id / 10000);
-								//dispatch.toServer('C_START_SKILL', 6, queue);
 								if(skill == GRIM_STRIKE)
 								{
 									skill = CAT_GRIM;
+									if(canrecastgirm)
+									{
+										locked = true;
+										prevgrim = Date.now();
+									}
 								}
 								else
 								{
+									canrecastgirm = true;
 									skill = CAT_SHEER;
 								}
-								//dispatch.toClient('S_SKILL_CATEGORY', 3, {category: skill, enabled: true});
+								//command.message('can recast: ' + String(canrecastgirm));
+								if(canrecastgirm)
+								{
+									canrecastgirm = false;
+									dispatch.toServer('C_START_SKILL', 6, queue);
+									queue = 0;
+								}
+								if(haspretty){dispatch.toClient('S_SKILL_CATEGORY', 3, {category: skill, enabled: true});}
 							}
 						} // stage 2 happens if you don't cancel animationa after stage 1
 					}
