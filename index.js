@@ -12,7 +12,7 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
 	gameId = 0,
     locked = false,
 	prevgrim = 0,
-	canrecastgirm = false;
+	canrecastgirm = false,
 	haspretty = dispatch.base.protocolMap.name.has('S_SKILL_CATEGORY');
 	
 	function handleredcleanup(skill)
