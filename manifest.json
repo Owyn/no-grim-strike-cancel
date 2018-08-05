@@ -1,8 +1,8 @@
 {
 	"files": {
 		"README.md": "dda2586b30517dd43aad8ad92bae1fbb59ad008957c18dce8ba81ef2a61e9054",
-		"index.js": "51a876ad99ea549c616cc650e15923b8bba4efb9476b0fd15ebcb142aeb5e27f",
-		"module.json": "c9d64db002e29acb5860c9bed579321586008c8646529c2079594fe9a2428443"
+		"index.js": "2fd294cd9ac9a85dfe2e6b489608573dd3b27ed8436fc79a20bf5f8800694bf6",
+		"module.json": "5c09a528c4bab053c626654edd84b4d7cc667d867ef2bf10dfdd297e7c8fbb1a"
 	},
 	"defs": {
 		"C_START_SKILL": 6,
