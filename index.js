@@ -1,9 +1,9 @@
 //const Command = require('command');
 const GRIM_TIMEOUT = 700; // ms // in case you miss your target and there's no S_EACH_SKILL_RESULT, but you wanna recast it real quick lol
 const GRIM_STRIKE = 5; // 50300 & 50330
+const SUNDERING = 4;
 const SHEAR = 3; // 30300 & 30330 // shear can cancel grim before it has done its 2nd hit
-const CAT_GRIM = 90005;
-const CAT_SHEAR =90003;
+const CAT_BASE = 90000;
 
 module.exports = function NoWastedGrimStrikes(dispatch) {
 	//const command = Command(dispatch);
@@ -20,7 +20,7 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
 	{
 		if(isred && haspretty)
 		{
-			dispatch.toClient('S_SKILL_CATEGORY', 3, {category: isred, enabled: true});
+			dispatch.toClient('S_SKILL_CATEGORY', 3, {category: isred+CAT_BASE, enabled: true});
 			isred = 0;
 		}
 	}
@@ -29,8 +29,8 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
         gameId = ev.gameId;
 		if (ev.templateId % 100 - 1 === 8 && !hooks.length)
 		{
-			dispatch.hook('S_CREST_MESSAGE', 2, event => {
-				if (event.type === 6) // since reaper has no resets other than grim - no need to check which skill was reset
+			dispatch.hook('S_CREST_MESSAGE', 2, event => { // needed only for SP compatibility
+				if (event.type === 6 && Math.floor(event.skill / 10000) === GRIM_STRIKE)
 				{
 					//command.message('reset <font color="#A52A2A">'+ event.skill +' </font>');
 					canrecast = true;
@@ -39,24 +39,16 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
 
 			hook('C_START_SKILL', 6, {order: -200}, event => {
 				let skill = Math.floor(event.skill.id / 10000);
-				if (locked && (skill === GRIM_STRIKE || skill === SHEAR) && Date.now() - prevgrim < GRIM_TIMEOUT)
+				if (locked && (skill === GRIM_STRIKE || skill === SHEAR || skill === SUNDERING) && Date.now() - prevgrim < GRIM_TIMEOUT)
 				{
 					//command.message('<font color="#C0C0C0">' + String(skill)+ ' queued </font>');
-					if(skill === GRIM_STRIKE)
-					{
-						skill = CAT_GRIM;
-					}
-					else
-					{
-						skill = CAT_SHEAR;
-					}
 					if(skill !== isred && haspretty)
 					{
 						if(queue) // queued another skill while previous one wasn't casted yet - replacing
 						{
 							makenotred();
 						}
-						dispatch.toClient('S_SKILL_CATEGORY', 3, {category: skill, enabled: false});
+						dispatch.toClient('S_SKILL_CATEGORY', 3, {category: skill+CAT_BASE, enabled: false});
 						isred = skill;
 					}
 					queue = event;
@@ -74,7 +66,7 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
 					canrecast = false;
 					prevgrim = Date.now();
 				}
-				else if (skill !== SHEAR) // you missed, didn't you?
+				else if (skill !== SHEAR && skill !== SUNDERING) // you missed, didn't you?
 				{
 					makenotred();
 				}
@@ -88,7 +80,7 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
 						command.message('<font color="#FBB917"> GRIM_DMG ' + String(event.stage) + ' </font>: '  + String(event.damage));
 					}*/
 					let skill = Math.floor(event.skill.id / 10000);
-					if(event.stage === 0 && (skill === GRIM_STRIKE || skill === SHEAR))
+					if(event.stage === 0 && (skill === GRIM_STRIKE || skill === SHEAR || skill === SUNDERING))
 					{
 						makenotred();
 					}
@@ -118,7 +110,7 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
 								queue = 0;
 							}
 						}
-					} // stage 2 happens if you don't cancel animationa after stage 1
+					} // stage 2 happens if you don't cancel animation after stage 1
 				}
 			});
 		}
