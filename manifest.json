@@ -1,8 +1,8 @@
 {
 	"files": {
-		"README.md": "dda2586b30517dd43aad8ad92bae1fbb59ad008957c18dce8ba81ef2a61e9054",
-		"index.js": "2fd294cd9ac9a85dfe2e6b489608573dd3b27ed8436fc79a20bf5f8800694bf6",
-		"module.json": "5c09a528c4bab053c626654edd84b4d7cc667d867ef2bf10dfdd297e7c8fbb1a"
+		"README.md": "53b018946b34c9b37aea0376ad79df34cb63013a60a17027734682e058bcd35f",
+		"index.js": "f3c6c078eac261d6406b018aec0de558b84e986bc07c64fa7150c9fb78133627",
+		"module.json": "4df1b7049cd874e9640b877c4e17c06f8d6e636b07a3008b81414404939ca1de"
 	},
 	"defs": {
 		"C_START_SKILL": 6,
