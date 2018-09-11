@@ -37,7 +37,7 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
 				}
 			});
 
-			hook('C_START_SKILL', 6, {order: -200}, event => {
+			hook('C_START_SKILL', dispatch.majorPatchVersion >= 74 ? 7 : 6, {order: -200}, event => {
 				let skill = Math.floor(event.skill.id / 10000);
 				if (locked && (skill === GRIM_STRIKE || skill === SHEAR || skill === SUNDERING) && Date.now() - prevgrim < GRIM_TIMEOUT)
 				{
@@ -72,7 +72,7 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
 				}
 			});
 			
-			hook('S_EACH_SKILL_RESULT', 7, event => {
+			hook('S_EACH_SKILL_RESULT', dispatch.majorPatchVersion >= 74 ? 11 : 10, event => {
 				if(gameId.equals(event.source))
 				{
 					/*if(event.damage != 0)
@@ -106,7 +106,7 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
 							if(canrecast)
 							{
 								canrecast = false;
-								dispatch.toServer('C_START_SKILL', 6, queue);
+								dispatch.toServer('C_START_SKILL', dispatch.majorPatchVersion >= 74 ? 7 : 6, queue);
 								queue = 0;
 							}
 						}
