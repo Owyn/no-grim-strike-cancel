@@ -46,10 +46,7 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
 						//command.message('<font color="#C0C0C0">' + String(skill)+ ' queued </font>');
 						if(skill !== isred && haspretty)
 						{
-							if(queue) // queued another skill while previous one wasn't casted yet - replacing
-							{
-								makenotred();
-							}
+							makenotred(); // if we queued another skill while previous one wasn't casted yet - replacing
 							dispatch.toClient('S_SKILL_CATEGORY', 3, {category: skill+CAT_BASE, enabled: false});
 							isred = skill;
 						}
