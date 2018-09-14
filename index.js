@@ -65,10 +65,11 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
 						canrecast = false;
 						prevgrim = Date.now();
 					}
-					else if (skill !== SHEAR && skill !== SUNDERING) // you missed, didn't you?
+					else
 					{
-						makenotred();
+						prevgrim = 0;
 					}
+					makenotred();
 				});
 				
 				hook('S_EACH_SKILL_RESULT', 12, event => {
