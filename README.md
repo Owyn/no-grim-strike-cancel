@@ -6,3 +6,7 @@ Delays casting of grim strike or shear or sundering before the 2nd hit (with big
 **visual clarity** - skill hotbar slot becomes red when a skill is delayed untill the 2nd hit of previous grim - that means no need to smash the skill button anymore for the next skillcast to happen, and becomes normal again after 1st hit of delayed skill is done - after that it's possible to cast\delay skills again
 
 **note** - it waits for dmg number of 2nd hit to reach the client, meaning ping would delay it, but it should be compensated with smooth skill delaying method implemented here
+
+**Skill Prediction** - current grim module version is fully compatible with SP and has no issues\errors\whatsoever, it's just that Salty blacklisted this module cuz he thinks it gives too much of an advantage (and maybe because 1st alpha version wasn't compatible with it lol - his excuse)
+
+to bypass his blacklist of modules he personally doesn't like - just rename the modules folder so it won't contain the word **grim**
