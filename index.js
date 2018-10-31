@@ -1,5 +1,6 @@
 //const Command = require('command');
 const GRIM_TIMEOUT = 700; // ms // in case you miss your target and there's no S_EACH_SKILL_RESULT, but you wanna recast it real quick lol
+const RECALL_SCYTHES = 21; // 210100
 const GRIM_STRIKE = 5; // 50300 & 50330
 const SUNDERING = 4;
 const SHEAR = 3; // 30300 & 30330 // shear can cancel grim before it has done its 2nd hit
@@ -14,6 +15,7 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
 	prevgrim = 0,
 	canrecast = false,
 	isred = 0,
+	launched = 0,
 	haspretty = dispatch.base.protocolMap.name.has('S_SKILL_CATEGORY');
 	
 	function makenotred()
@@ -41,7 +43,7 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
 
 				hook('C_START_SKILL', 7, {order: -200}, event => {
 					let skill = Math.floor(event.skill.id / 10000);
-					if (locked && (skill === GRIM_STRIKE || skill === SHEAR || skill === SUNDERING) && Date.now() - prevgrim < GRIM_TIMEOUT)
+					if (locked && (skill === GRIM_STRIKE || skill === SHEAR || skill === RECALL_SCYTHES || skill === SUNDERING) && Date.now() - prevgrim < GRIM_TIMEOUT)
 					{
 						//command.message('<font color="#C0C0C0">' + String(skill)+ ' queued </font>');
 						if(skill !== isred && haspretty)
@@ -75,14 +77,15 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
 				hook('S_EACH_SKILL_RESULT', 12, event => {
 					if(gameId.equals(event.source))
 					{
-						/*if(event.damage != 0)
+						let skill = Math.floor(event.skill.id / 10000);
+						/*if(event.damage != 0 && skill === GRIM_STRIKE)
 						{
 							command.message('<font color="#FBB917"> GRIM_DMG ' + String(event.stage) + ' </font>: '  + String(event.damage));
 						}*/
-						let skill = Math.floor(event.skill.id / 10000);
-						if(event.stage === 0 && (skill === GRIM_STRIKE || skill === SHEAR || skill === SUNDERING))
+						if(launched && event.stage === 0 && skill === launched)
 						{
 							makenotred();
+							launched = 0;
 						}
 						else if(event.stage === 1 && skill === GRIM_STRIKE) // when 2nd hit is done
 						{
@@ -107,6 +110,7 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
 								{
 									canrecast = false;
 									dispatch.toServer('C_START_SKILL', 7, queue);
+									launched = Math.floor(queue.skill.id / 10000);
 									queue = 0;
 								}
 							}
