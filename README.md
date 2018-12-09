@@ -4,6 +4,7 @@ Stops early cancelling of **grim strike** <img src=https://image.ibb.co/eFn4gU/G
 Delays casting of grim strike or shear or sundering before the 2nd hit (with biggest dmg) of previous grimstrike has passed, or till 0.7 sec elapsed in case you fully missed your enemy or you was just hitting air for some reason (don't do that and expect something...)
 
 **visual clarity** - skill hotbar slot becomes red when a skill is delayed untill the 2nd hit of previous grim - that means no need to smash the skill button anymore for the next skillcast to happen, and becomes normal again after 1st hit of delayed skill is done - after that it's possible to cast\delay skills again
+(Can be turned off via proxy command `grim.stream`)
 
 **note** - it waits for dmg number of 2nd hit to reach the client, meaning ping would delay it, but it should be compensated with smooth skill delaying method implemented here
 

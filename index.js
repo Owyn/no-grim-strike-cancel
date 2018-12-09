@@ -7,7 +7,7 @@ const SHEAR = 3; // 30300 & 30330 // shear can cancel grim before it has done it
 const CAT_BASE = 90000;
 
 module.exports = function NoWastedGrimStrikes(dispatch) {
-	//const command = dispatch.command
+	const command = dispatch.command
     let hooks = [],
 	queue = 0,
 	gameId = 0,
@@ -16,7 +16,12 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
 	canrecast = false,
 	isred = 0,
 	launched = 0,
-	haspretty = dispatch.protocolMap.name.has('S_SKILL_CATEGORY');
+	haspretty = true;
+	
+	command.add('grim.stream', () => {
+		haspretty = !haspretty;
+		command.message("Red highlighting of queued skills" + (haspretty ? 'enabled' : 'disabled'))
+	})
 	
 	function makenotred()
 	{
