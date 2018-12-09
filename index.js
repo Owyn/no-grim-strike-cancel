@@ -1,4 +1,4 @@
-//const Command = require('command');
+
 const GRIM_TIMEOUT = 700; // ms // in case you miss your target and there's no S_EACH_SKILL_RESULT, but you wanna recast it real quick lol
 const RECALL_SCYTHES = 21; // 210100
 const GRIM_STRIKE = 5; // 50300 & 50330
@@ -7,7 +7,7 @@ const SHEAR = 3; // 30300 & 30330 // shear can cancel grim before it has done it
 const CAT_BASE = 90000;
 
 module.exports = function NoWastedGrimStrikes(dispatch) {
-	//const command = Command(dispatch);
+	//const command = dispatch.command
     let hooks = [],
 	queue = 0,
 	gameId = 0,
@@ -16,7 +16,7 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
 	canrecast = false,
 	isred = 0,
 	launched = 0,
-	haspretty = dispatch.base.protocolMap.name.has('S_SKILL_CATEGORY');
+	haspretty = dispatch.protocolMap.name.has('S_SKILL_CATEGORY');
 	
 	function makenotred()
 	{
@@ -75,7 +75,7 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
 				});
 				
 				hook('S_EACH_SKILL_RESULT', 12, event => {
-					if(gameId.equals(event.source))
+					if(gameId === event.source)
 					{
 						let skill = Math.floor(event.skill.id / 10000);
 						/*if(event.damage != 0 && skill === GRIM_STRIKE)

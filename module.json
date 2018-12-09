@@ -1,5 +1,8 @@
 {
 	"disableAutoUpdate": false,
+	"name": "no_more_wasted_grim-strikes",
+	"author": "Owyn",
+	"description": "Stop early canceling of grim strike",
 	"servers": ["https://raw.githubusercontent.com/Owyn/no_more_wasted_grim-strikes/master/"],
 	"supportUrl": "https://github.com/Owyn/no_more_wasted_grim-strikes/issues"
 }
