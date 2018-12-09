@@ -20,7 +20,7 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
 	
 	command.add('grim.stream', () => {
 		haspretty = !haspretty;
-		command.message("Red highlighting of queued skills" + (haspretty ? 'enabled' : 'disabled'))
+		command.message('Red highlighting of queued skills: ' + (haspretty ? 'enabled' : 'disabled'));
 	})
 	
 	function makenotred()
