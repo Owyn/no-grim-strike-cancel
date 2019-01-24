@@ -32,7 +32,7 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
 		}
 	}
 	
-    dispatch.hook('S_LOGIN', 10, ev => {
+    dispatch.hook('S_LOGIN', 12, ev => {
         gameId = ev.gameId;
 		if (ev.templateId % 100 - 1 === 8) // it's a reaper
 		{
