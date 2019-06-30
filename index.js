@@ -32,7 +32,7 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
 		}
 	}
 	
-    dispatch.hook('S_LOGIN', dispatch.majorPatchVersion >= 81 ? 13 : 12, ev => {
+    dispatch.hook('S_LOGIN', 13, ev => {
         gameId = ev.gameId;
 		if (ev.templateId % 100 - 1 === 8) // it's a reaper
 		{
@@ -79,7 +79,7 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
 					makenotred();
 				});
 				
-				hook('S_EACH_SKILL_RESULT', 12, event => {
+				hook('S_EACH_SKILL_RESULT', 13, event => {
 					if(gameId === event.source)
 					{
 						let skill = Math.floor(event.skill.id / 10000);
