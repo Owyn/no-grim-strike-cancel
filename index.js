@@ -79,20 +79,20 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
 					makenotred();
 				});
 				
-				hook('S_EACH_SKILL_RESULT', 13, event => {
+				hook('S_EACH_SKILL_RESULT', 13, {order: -200}, event => {
 					if(gameId === event.source)
 					{
 						let skill = Math.floor(event.skill.id / 10000);
 						/*if(event.damage != 0 && skill === GRIM_STRIKE)
 						{
-							command.message('<font color="#FBB917"> GRIM_DMG ' + String(event.stage) + ' </font>: '  + String(event.damage));
+							command.message('<font color="#FBB917"> GRIM_DMG ' + String(event.targeting) + ' </font>: '  + String(event.damage));
 						}*/
-						if(launched && event.stage === 0 && skill === launched)
+						if(launched && event.targeting === 0 && skill === launched)
 						{
 							makenotred();
 							launched = 0;
 						}
-						else if(event.stage === 1 && skill === GRIM_STRIKE) // when 2nd hit is done
+						else if(event.targeting === 1 && skill === GRIM_STRIKE) // when 2nd hit is done
 						{
 							locked = false;
 							//command.message('<font color="#CD0000"> R UNlocked1</font> ' + " passed: " + String(Date.now() - prevgrim));
