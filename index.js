@@ -79,7 +79,7 @@ module.exports = function NoWastedGrimStrikes(dispatch) {
 					makenotred();
 				});
 				
-				hook('S_EACH_SKILL_RESULT', 13, {order: -200}, event => {
+				hook('S_EACH_SKILL_RESULT', dispatch.majorPatchVersion >= 86 ? 14 : 13, {order: -200}, event => {
 					if(gameId === event.source)
 					{
 						let skill = Math.floor(event.skill.id / 10000);
